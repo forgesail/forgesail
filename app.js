@@ -346,7 +346,7 @@ function schematic(record) {
   return `
     <svg viewBox="0 0 ${viewWidth} ${viewHeight}" role="img" aria-label="Schematic cross-section of ${escapeHtml(record.model)}">
       <path d="${outline}" fill="none" stroke="#0a3380" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-      <g font-size="10" fill="#59636b" font-family="-apple-system, Segoe UI, Roboto, sans-serif">
+      <g font-size="10" font-weight="400" fill="#59636b" font-family="-apple-system, Segoe UI, Roboto, sans-serif">
         <text x="${center}" y="${viewHeight - 8}" text-anchor="middle">${formatNumber(record.base_mm)} mm</text>
         <text x="${center}" y="${top - 7}" text-anchor="middle">${formatNumber(record.head_mm)} mm</text>
         <text x="${center + Math.max(base, head) / 2 + 13}" y="${top + height / 2 + 3}">${formatNumber(record.height_mm)}</text>
@@ -354,7 +354,7 @@ function schematic(record) {
       <line x1="${center + Math.max(base, head) / 2 + 7}" y1="${top}" x2="${center + Math.max(base, head) / 2 + 7}" y2="${top + height}" stroke="#59636b" stroke-width="1"/>
       <path d="M${center + Math.max(base, head) / 2 + 4} ${top + 4} L${center + Math.max(base, head) / 2 + 7} ${top} L${center + Math.max(base, head) / 2 + 10} ${top + 4}" fill="none" stroke="#59636b" stroke-width="1"/>
       <path d="M${center + Math.max(base, head) / 2 + 4} ${top + height - 4} L${center + Math.max(base, head) / 2 + 7} ${top + height} L${center + Math.max(base, head) / 2 + 10} ${top + height - 4}" fill="none" stroke="#59636b" stroke-width="1"/>
-      <text x="${viewWidth / 2}" y="14" text-anchor="middle" font-size="9" fill="#8b9499">Schematic only, not to scale</text>
+      <text x="${viewWidth / 2}" y="14" text-anchor="middle" font-size="9" font-weight="400" fill="#8b9499">Schematic only, not to scale</text>
     </svg>`;
 }
 
@@ -458,7 +458,7 @@ function compactSchematic(record) {
   return `
     <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Cross-section of ${escapeHtml(record.model)}">
       <path d="${outline}" fill="none" stroke="#0a3380" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
-      <g font-size="8" fill="#52677d">
+      <g font-size="8" font-weight="400" fill="#52677d">
         <text x="${center}" y="${headY - 5}" text-anchor="middle">${formatNumber(record.head_mm)}</text>
         <text x="${center}" y="${height - 3}" text-anchor="middle">${formatNumber(record.base_mm)}</text>
         <text x="${dimX}" y="${top + railHeight / 2 + 2}">${formatNumber(record.height_mm)}</text>
