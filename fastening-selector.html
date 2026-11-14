@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ForgeSail Crane Rail Fastening Selector</title>
+  <meta name="description" content="Configure a preliminary crane rail fastening package: rail clip, sole plate, rail pad and bolt set.">
+  <link rel="icon" href="assets/logo-white.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="fastening-selector.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="assets/logo-white.png" alt="ForgeSail">
+      <div>
+        <h1>ForgeSail Fastening Selector</h1>
+        <p>Preliminary rail clip and base plate configuration</p>
+      </div>
+    </div>
+    <nav class="topbar-actions">
+      <a class="text-button" href="index.html">Rail data</a>
+      <a class="text-button" href="https://forgesail.com/products/rail-clips/" target="_blank" rel="noopener">Source</a>
+      <button id="shareLink" class="icon-text-button" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="m8.7 10.7 6.6-3.4M8.7 13.3l6.6 3.4"/></svg>
+        Share
+      </button>
+      <button id="copySummary" class="icon-text-button" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </nav>
+  </header>
+
+  <main class="selector-main">
+    <section class="intro-strip">
+      <p class="eyebrow">Configuration preview</p>
+      <h2>Choose a rail profile and working condition</h2>
+      <p>Get a starter package for quotation. ForgeSail engineering confirms every proposal before production.</p>
+    </section>
+
+    <section class="selector-layout">
+      <form class="config-panel" id="configForm">
+        <div class="field">
+          <label for="railSelect">Rail profile</label>
+          <select id="railSelect"></select>
+        </div>
+
+        <fieldset class="segmented">
+          <legend>Application</legend>
+          <div class="segments">
+            <label><input type="radio" name="application" value="Container terminal" checked><span>Container terminal</span></label>
+            <label><input type="radio" name="application" value="Steel mill"><span>Steel mill</span></label>
+            <label><input type="radio" name="application" value="Warehouse & logistics"><span>Warehouse</span></label>
+            <label><input type="radio" name="application" value="Shipyard & mining"><span>Shipyard & mining</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="segmented">
+          <legend>Support base</legend>
+          <div class="segments">
+            <label><input type="radio" name="base" value="Concrete runway" checked><span>Concrete runway</span></label>
+            <label><input type="radio" name="base" value="Steel girder"><span>Steel girder</span></label>
+            <label><input type="radio" name="base" value="Grout bed"><span>Grout bed</span></label>
+            <label><input type="radio" name="base" value="Existing track retrofit"><span>Retrofit</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="segmented">
+          <legend>Duty</legend>
+          <div class="segments">
+            <label><input type="radio" name="duty" value="Standard duty"><span>Standard duty</span></label>
+            <label><input type="radio" name="duty" value="Heavy duty" checked><span>Heavy duty</span></label>
+            <label><input type="radio" name="duty" value="High side load"><span>High side load</span></label>
+          </div>
+        </fieldset>
+
+        <div class="form-note">This is a preliminary configuration, not a structural design.</div>
+      </form>
+
+      <section class="result-panel" aria-live="polite">
+        <div class="result-head">
+          <div>
+            <p class="eyebrow">Recommended package</p>
+            <h2 id="resultTitle">A100 · Container terminal</h2>
+          </div>
+          <span class="duty-badge" id="dutyBadge">Heavy duty</span>
+        </div>
+
+        <div class="model-stage" id="modelStage">
+          <div class="model-placeholder">
+            3D model coming soon
+          </div>
+        </div>
+        <a class="button" id="drawingLink" href="#" target="_blank" rel="noopener">
+          Download configuration PDF
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14"/></svg>
+        </a>
+
+        <div class="component-grid" id="componentGrid"></div>
+
+        <div class="result-actions">
+          <a class="button primary" id="quoteLink" href="https://forgesail.com/#form" target="_blank" rel="noopener">
+            Request quotation
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+          </a>
+          <button class="button" id="printProposal" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6Z"/></svg>
+            Print
+          </button>
+        </div>
+
+        <div class="engineering-note">
+          Part numbers, pad suffixes, bolt grades and side-load values come from the published ForgeSail reference. Confirm final sizes, anchor spacing and load capacity with ForgeSail engineering.
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ForgeSail Crane Rail Fastening Selector",
+      "url": "https://forgesail.com/fastening-selector/",
+      "applicationCategory": "EngineeringApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "description": "Preliminary crane rail fastening configuration for quotation."
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "ForgeSail Rail Solutions Ltd."
+      }
+    }
+  </script>
+
+  <script src="data/rails.js"></script>
+  <script src="data/fastening-systems.js"></script>
+  <script src="fastening-selector.js"></script>
+</body>
+</html>

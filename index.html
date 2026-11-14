@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ForgeSail Rail Selector</title>
+  <meta name="description" content="Free industrial rail selection tool by ForgeSail. Search and compare 135 rail profiles, materials and drawings.">
+  <meta name="theme-color" content="#0a3380">
+  <meta property="og:title" content="ForgeSail Rail Selector">
+  <meta property="og:description" content="Free industrial rail selection tool by ForgeSail. Search and compare 135 rail profiles, materials and drawings.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ForgeSail Rail Solutions">
+  <link rel="icon" href="assets/logo-white.png">
+  <link rel="stylesheet" href="styles.css?v=20261114b">
+  <link rel="stylesheet" href="rail-materials.css?v=20261114b">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="assets/logo-white.png" alt="ForgeSail">
+      <div>
+        <h1>ForgeSail Rail Selector</h1>
+        <p>Industrial rail profile selector</p>
+      </div>
+    </div>
+    <nav class="topbar-actions">
+      <a class="text-button" href="fastening-selector.html">Fastening selector</a>
+      <a class="text-button" href="https://forgesail.com/products/rails/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M19 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+        Source
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="control-bar" aria-label="Rail data filters">
+      <label class="search-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        <input id="search" type="search" placeholder="Search model, standard, e.g. A120 or QU100" autocomplete="off">
+      </label>
+      <label class="select-field">
+        <span>Region</span>
+        <select id="regionFilter">
+          <option value="">All regions</option>
+        </select>
+      </label>
+      <label class="select-field">
+        <span>Category</span>
+        <select id="categoryFilter">
+          <option value="">All series</option>
+        </select>
+      </label>
+      <label class="select-field">
+        <span>Sort</span>
+        <select id="sortSelect">
+          <option value="popularity" selected>Popularity, China first</option>
+          <option value="mass-asc">Mass, low to high</option>
+          <option value="mass-desc">Mass, high to low</option>
+          <option value="model-asc">Model, A to Z</option>
+        </select>
+      </label>
+      <button id="resetFilters" class="reset-button" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>
+        Reset
+      </button>
+      <div class="count" id="resultCount" aria-live="polite"></div>
+    </section>
+
+    <section class="workspace">
+      <div class="table-panel">
+        <div class="table-toolbar">
+          <button id="clearCompare" class="text-button muted" type="button">Clear compare</button>
+          <span class="compare-status" id="compareStatus">Compare up to 3 profiles</span>
+        </div>
+        <div class="table-scroll" id="tableScroll">
+          <table class="rail-table">
+            <thead>
+              <tr>
+                <th class="col-compare"><span class="visually-hidden">Compare</span></th>
+                <th class="col-model">Model</th>
+                <th class="col-standard">Standard</th>
+                <th class="col-region">Region</th>
+                <th class="num">Base mm</th>
+                <th class="num">Head mm</th>
+                <th class="num">Height mm</th>
+                <th class="num">Mass kg/m</th>
+                <th class="col-drawing">Drawing</th>
+              </tr>
+            </thead>
+            <tbody id="railRows"></tbody>
+          </table>
+          <div id="emptyState" class="empty-state" hidden>No profiles match these filters.</div>
+        </div>
+      </div>
+
+      <aside class="detail-panel" id="detailPanel" aria-live="polite">
+        <div class="detail-empty" id="detailEmpty">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+          <p>Select a rail profile to inspect its dimensions.</p>
+        </div>
+        <div id="detailContent" hidden></div>
+      </aside>
+    </section>
+
+    <section class="compare-band" id="compareBand" hidden>
+      <div class="compare-head">
+        <h2>Comparison</h2>
+        <button id="closeCompare" class="icon-button" type="button" aria-label="Close comparison">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="compare-outlines" id="compareOutlines"></div>
+      <div class="compare-scroll">
+        <table class="compare-table">
+          <thead>
+            <tr><th>Property</th><th class="compare-col"></th><th class="compare-col"></th><th class="compare-col"></th></tr>
+          </thead>
+          <tbody id="compareRows"></tbody>
+        </table>
+      </div>
+      <a class="quote-link" href="https://forgesail.com/#form" target="_blank" rel="noopener">
+        Get a quote for these profiles
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+      </a>
+    </section>
+
+    <section class="materials-embed" id="materials">
+      <div class="materials-intro">
+        <p class="eyebrow">Material reference</p>
+        <h2>Rail steel grades at a glance</h2>
+        <p>
+          Grade selection balances strength, hardness and wear resistance.
+          The tables below cross-reference China GB/T 2585-2021 and Europe EN 13674-1.
+        </p>
+      </div>
+
+      <div class="materials-section">
+        <div class="section-head">
+          <h3>China GB/T 2585-2021</h3>
+          <p>Hot-rolled rail steel.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="materials-table">
+            <thead>
+              <tr><th>Grade</th><th>Tensile Rm</th><th>Hardness HBW</th><th>Elongation</th><th>Typical use</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>U71Mn</strong></td><td>&ge; 880 MPa</td><td>260-300</td><td>&ge; 10%</td><td>General freight, ports, industrial track</td></tr>
+              <tr><td><strong>U75V</strong></td><td>&ge; 980 MPa</td><td>280-320</td><td>&ge; 10%</td><td>Heavy-haul and heavy crane runways</td></tr>
+              <tr><td><strong>U76CrRE</strong></td><td>&ge; 1080 MPa</td><td>300-350</td><td>&ge; 9%</td><td>Heavy-haul and high axle-load mining lines</td></tr>
+              <tr><td><strong>U78CrV</strong></td><td>&ge; 1180 MPa</td><td>330-380</td><td>&ge; 8%</td><td>Small-radius curves and severe wear</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="materials-section">
+        <div class="section-head">
+          <h3>Europe EN 13674-1</h3>
+          <p>Named by running-surface hardness.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="materials-table">
+            <thead>
+              <tr><th>Grade</th><th>C</th><th>Mn</th><th>Cr</th><th>Tensile Rm</th><th>Hardness HBW</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>R200</td><td>0.40-0.60</td><td>0.70-1.20</td><td>&le; 0.15</td><td>&ge; 700 MPa</td><td>200-240</td></tr>
+              <tr><td>R260</td><td>0.62-0.80</td><td>0.70-1.20</td><td>&le; 0.15</td><td>&ge; 880 MPa</td><td>260-300</td></tr>
+              <tr><td>R320Cr</td><td>0.60-0.80</td><td>0.80-1.20</td><td>0.80-1.20</td><td>&ge; 1080 MPa</td><td>320-360</td></tr>
+              <tr><td>R350HT</td><td>0.72-0.80</td><td>0.70-1.20</td><td>&le; 0.15</td><td>&ge; 1175 MPa</td><td>350-390</td></tr>
+              <tr><td>R400HT</td><td>0.90-1.05</td><td>0.80-1.30</td><td>&le; 0.30</td><td>&ge; 1280 MPa</td><td>400-440</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="materials-section">
+        <div class="section-head">
+          <h3>China &harr; Europe equivalence</h3>
+          <p>Practical cross-reference for specification review.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="materials-table">
+            <thead>
+              <tr><th>China</th><th>Europe</th><th>Legacy DIN</th><th>Typical application</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>50Mn</td><td>R200</td><td>700</td><td>Light rail</td></tr>
+              <tr><td><strong>U71Mn</strong></td><td><strong>R260</strong></td><td>900A</td><td>Most common equivalent for S49, UIC54 and QU rails</td></tr>
+              <tr><td><strong>U75V</strong></td><td><strong>R320Cr</strong></td><td>-</td><td>High-strength alloy, heavy crane duty</td></tr>
+              <tr><td>U78CrV / heat treated</td><td><strong>R350HT</strong> / <strong>R400HT</strong></td><td>-</td><td>Extreme wear and impact</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="note-strip">
+        <strong>U71Mn &harr; R260 / 900A</strong> is the most common international pairing:
+        Rm &ge; 880 MPa and hardness 260-300 HBW. Confirm final grade against the
+        governing standard and mill certificate before ordering.
+      </div>
+    </section>
+  </main>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://forgesail.com/#organization",
+          "name": "ForgeSail Rail Solutions Ltd.",
+          "url": "https://forgesail.com/",
+          "logo": "https://forgesail.com/wp-content/uploads/2026/03/cropped-forgesail-Favicon-white.png"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "ForgeSail Rail Selector",
+          "url": "https://forgesail.com/rail-selector/",
+          "applicationCategory": "EngineeringApplication",
+          "operatingSystem": "Web",
+          "description": "Industrial rail profile selector with dimensions, material grades and drawing references.",
+          "provider": { "@id": "https://forgesail.com/#organization" }
+        }
+      ]
+    }
+  </script>
+  <script src="data/rails.js?v=20261114b"></script>
+  <script src="data/materials.js?v=20261114b"></script>
+  <script src="app.js?v=20261114b"></script>
+</body>
+</html>
