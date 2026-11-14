@@ -281,13 +281,13 @@ main {
 .table-scroll {
   overflow: auto;
   max-height: calc(100vh - 230px);
-  min-height: 360px;
+  min-height: 320px;
 }
 
 .rail-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 800px;
+  min-width: 0;
 }
 
 .rail-table th,
@@ -297,6 +297,12 @@ main {
   text-align: left;
   vertical-align: middle;
   white-space: nowrap;
+}
+
+.rail-table th,
+.rail-table td {
+  padding: 5px 6px;
+  font-size: 12px;
 }
 
 .rail-table thead th {
@@ -334,8 +340,10 @@ main {
 }
 
 .rail-table .model {
+  min-width: 108px;
   font-weight: 650;
   color: var(--ink);
+  white-space: normal;
 }
 
 .alt-badge {
@@ -352,15 +360,17 @@ main {
 
 .rail-table .standard {
   color: var(--ink-soft);
+  white-space: normal;
+  min-width: 90px;
 }
 
 .rail-table .region {
   display: inline-block;
-  padding: 3px 7px;
+  padding: 2px 5px;
   border-radius: 4px;
   background: #eef0f2;
   color: #394147;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
 }
 
@@ -393,7 +403,9 @@ main {
   gap: 6px;
   color: var(--teal);
   text-decoration: none;
+  font-size: 12px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .drawing-link:hover {
@@ -422,8 +434,8 @@ main {
   display: grid;
   place-items: center;
   gap: 10px;
-  min-height: 360px;
-  padding: 24px;
+  min-height: 220px;
+  padding: 16px;
   color: var(--ink-soft);
   text-align: center;
 }

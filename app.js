@@ -254,6 +254,14 @@ function renderDetail(record) {
     </div>`;
 }
 
+function revealDetail() {
+  els.detailContent.scrollTop = 0;
+  els.detailPanel.scrollTop = 0;
+  if (window.innerWidth < 1040) {
+    els.detailPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 function materialKeys(record) {
   if (Array.isArray(record.materials) && record.materials.length) return record.materials;
   const family = {
@@ -569,6 +577,7 @@ els.railRows.addEventListener("click", (e) => {
   if (row) {
     const record = DATA.find((r) => r.id === row.dataset.id);
     renderDetail(record);
+    revealDetail();
   }
 });
 
