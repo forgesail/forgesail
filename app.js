@@ -362,7 +362,6 @@ function schematic(record) {
       <line x1="${center + Math.max(base, head) / 2 + 7}" y1="${top}" x2="${center + Math.max(base, head) / 2 + 7}" y2="${top + height}" stroke="#59636b" stroke-width="1"/>
       <path d="M${center + Math.max(base, head) / 2 + 4} ${top + 4} L${center + Math.max(base, head) / 2 + 7} ${top} L${center + Math.max(base, head) / 2 + 10} ${top + 4}" fill="none" stroke="#59636b" stroke-width="1"/>
       <path d="M${center + Math.max(base, head) / 2 + 4} ${top + height - 4} L${center + Math.max(base, head) / 2 + 7} ${top + height} L${center + Math.max(base, head) / 2 + 10} ${top + height - 4}" fill="none" stroke="#59636b" stroke-width="1"/>
-      <text x="${viewWidth / 2}" y="14" text-anchor="middle" font-size="9" font-weight="400" fill="#8b9499">Schematic only, not to scale</text>
     </svg>`;
 }
 
